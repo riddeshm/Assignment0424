@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CardSpriteAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 0802620b3a2859f45bdd189c7bc35d02, type: 3}
+    - {fileID: 21300000, guid: 21ca70266aebc054ba04bee60d93082f, type: 3}
+    - {fileID: 2800000, guid: f068beb6338e31243afd5b1a3ed6604f, type: 3}
+    - {fileID: 2800000, guid: 99f10cb705af6b348a812c1ab511d0ce, type: 3}
+    - {fileID: 2800000, guid: 8523d4368d550a947a1c3cb4168ed9ff, type: 3}
+    - {fileID: 2800000, guid: 7b52a4d2a4cc48d45bc0c270ebffc24b, type: 3}
+    - {fileID: 2800000, guid: 02a559c0b6c879d4297056cef79f941b, type: 3}
+    - {fileID: 2800000, guid: 6a15298c71266594086136f6121ae454, type: 3}
+    - {fileID: 2800000, guid: 07517454cd8e340429110b2e89533e3a, type: 3}
+    - {fileID: 2800000, guid: da6a082efa6b6694f92fad9442f30fa9, type: 3}
+    - {fileID: 2800000, guid: 78998314942cf794786a837260fddeeb, type: 3}
+    - {fileID: 2800000, guid: 397fcc769693d0747ac7c79d662555d9, type: 3}
+    - {fileID: 2800000, guid: 523bc81d4f12c154594d9134dfd85f4f, type: 3}
+    - {fileID: 2800000, guid: 0bc0a39dce7af2d40b541dddf4ed86dc, type: 3}
+    - {fileID: 2800000, guid: 2c1a6354d1d441c4e97d432a7edc557c, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 02a559c0b6c879d4297056cef79f941b, type: 3}
+  - {fileID: 21300000, guid: 7b52a4d2a4cc48d45bc0c270ebffc24b, type: 3}
+  - {fileID: 21300000, guid: 78998314942cf794786a837260fddeeb, type: 3}
+  - {fileID: 21300000, guid: 2c1a6354d1d441c4e97d432a7edc557c, type: 3}
+  - {fileID: 21300000, guid: 07517454cd8e340429110b2e89533e3a, type: 3}
+  - {fileID: 21300000, guid: 21ca70266aebc054ba04bee60d93082f, type: 3}
+  - {fileID: 21300000, guid: 8523d4368d550a947a1c3cb4168ed9ff, type: 3}
+  - {fileID: 21300000, guid: 397fcc769693d0747ac7c79d662555d9, type: 3}
+  - {fileID: 21300000, guid: f068beb6338e31243afd5b1a3ed6604f, type: 3}
+  - {fileID: 21300000, guid: 99f10cb705af6b348a812c1ab511d0ce, type: 3}
+  - {fileID: 21300000, guid: 0802620b3a2859f45bdd189c7bc35d02, type: 3}
+  - {fileID: 21300000, guid: 6a15298c71266594086136f6121ae454, type: 3}
+  - {fileID: 21300000, guid: 523bc81d4f12c154594d9134dfd85f4f, type: 3}
+  - {fileID: 21300000, guid: 0bc0a39dce7af2d40b541dddf4ed86dc, type: 3}
+  - {fileID: 21300000, guid: da6a082efa6b6694f92fad9442f30fa9, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Spade05
+  - Spade04
+  - Spade09
+  - Spade13
+  - Spade07
+  - Joker_Color
+  - Spade03
+  - Spade10
+  - Spade01
+  - Spade02
+  - BackColor_Blue
+  - Spade06
+  - Spade11
+  - Spade12
+  - Spade08
+  m_RenderDataMap: {}
+  m_Tag: CardSpriteAtlas
+  m_IsVariant: 0
