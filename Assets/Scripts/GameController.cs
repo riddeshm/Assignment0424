@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
             Card card1 = selectedCards.Dequeue();
             Card card2 = selectedCards.Dequeue();
 
-            if(card1.Id == card2.Id)
+            if(card1.GetId() == card2.GetId())
             {
                 board.CorrectPair(card1, card2);
             }

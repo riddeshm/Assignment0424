@@ -5,6 +5,13 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
+public enum CardState
+{
+    back,
+    front,
+    complete
+}
+
 public class Card : MonoBehaviour, IPointerDownHandler
 {
     public event System.Action<Card> OnCardSelected;
@@ -19,13 +26,30 @@ public class Card : MonoBehaviour, IPointerDownHandler
 
     private bool isSelectable = true;
 
-    public int Id { get { return id; } }
+    private CardState currentState;
 
-    public void UpdateCards(Sprite _frontSprite, Sprite _backSprite, int _id)
+    
+    private void Awake()
+    {
+        mainRenderer = GetComponent<Image>();
+
+        mainRenderer.sprite = backSprite;
+
+        currentState = CardState.back;
+    }
+
+    public int GetId()
+    { 
+        return id;
+    }
+
+    public void UpdateCards(Sprite _frontSprite, Sprite _backSprite, int _id, CardState _currentState = CardState.back)
     {
         frontSprite = _frontSprite;
         backSprite = _backSprite;
         id = _id;
+        mainRenderer.enabled = true;
+        currentState = _currentState;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -33,13 +57,6 @@ public class Card : MonoBehaviour, IPointerDownHandler
         if (!isSelectable)
             return;
         StartCoroutine(RotateToShowCard());
-    }
-
-    private void Awake()
-    {
-        mainRenderer = GetComponent<Image>();
-
-        mainRenderer.sprite = backSprite;
     }
 
     private IEnumerator RotateToShowCard()
@@ -54,6 +71,7 @@ public class Card : MonoBehaviour, IPointerDownHandler
             }
             yield return null;
         }
+        currentState = CardState.front;
         OnCardSelected?.Invoke(this);
     }
 
@@ -68,6 +86,7 @@ public class Card : MonoBehaviour, IPointerDownHandler
             }
             yield return null;
         }
+        currentState = CardState.back;
         isSelectable = true;
     }
 
@@ -77,6 +96,7 @@ public class Card : MonoBehaviour, IPointerDownHandler
     }
     public void HideCard()
     {
+        currentState = CardState.complete;
         mainRenderer.enabled = false;
     }
 }
