@@ -11,7 +11,8 @@ public class Board : MonoBehaviour
 	[SerializeField] private GameObject inputFieldPrefab;
 	private int rows;
 	private int cols;
-	private Card[] cards;
+	private List<Card> cardPool = new List<Card>();
+	private int totalcards;
 	
 
 	private Sprite[] selectedFaceSprites;
@@ -27,9 +28,9 @@ public class Board : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		for (int i = 0; i < cards.Length; i++)
+		for (int i = 0; i < cardPool.Count; i++)
 		{
-			cards[i].OnCardSelected -= CardSelected;
+			cardPool[i].OnCardSelected -= CardSelected;
 		}
 	}
 
@@ -37,12 +38,10 @@ public class Board : MonoBehaviour
     {
 		rows = _rows;
 		cols = _cols;
+		totalcards = rows * cols;
 		int totalFaceSprites = Mathf.CeilToInt((float)(rows * cols) / 2f);
-		Debug.Log("totalFaceSprites " + totalFaceSprites);
-		Debug.Log("faceSprites.Length - totalFaceSprites " + (faceSprites.Length - totalFaceSprites));
 		int randomFrontSpriteIndex = Random.Range(0, faceSprites.Length - totalFaceSprites);
 		selectedFaceSprites = new Sprite[totalFaceSprites];
-		cards = new Card[rows * cols];
 
 
 		for (int i = 0, j = randomFrontSpriteIndex; i < totalFaceSprites; i++)
@@ -51,27 +50,50 @@ public class Board : MonoBehaviour
 			j++;
 		}
 
-		CreateCards();
-		ShuffleArray<Card>(cards);
+		UpdateCards();
+		ShuffleList<Card>(cardPool);
 		AddCardsOnBoard();
 	}
 
-	private void CreateCards()
+	private void CreateCards(int count)
     {
-		gridLayout.cellSize = new Vector2(parentRect.rect.width / cols, parentRect.rect.height / rows);
+		for(int i = 0; i < count; i++)
+        {
+			GameObject cardGo = Instantiate(inputFieldPrefab);
+			Card card = cardGo.GetComponent<Card>();
+			card.OnCardSelected += CardSelected;
+			cardPool.Add(card);
+		}
+    }
 
+	private void HideCards(int fromIndex)
+    {
+		Debug.Log("fromIndex " + fromIndex);
+		for (int i = fromIndex; i < cardPool.Count; i++)
+		{
+			cardPool[i].gameObject.SetActive(false);
+		}
+	}
+
+	private void UpdateCards()
+    {
 		int cardCount = 0;
 		int id = 0;
+		if(cardPool.Count < totalcards)
+        {
+			CreateCards(totalcards - cardPool.Count);
+		}
+		else if(cardPool.Count > totalcards)
+        {
+			int extraCards = cardPool.Count - totalcards;
+			HideCards(cardPool.Count - extraCards);
+		}
 		for (int i = 0; i < rows; i++)
 		{
 			for (int j = 0; j < cols; j++)
 			{
-				GameObject cardGo = Instantiate(inputFieldPrefab);
-				Card card = cardGo.GetComponent<Card>();
-				Debug.Log(selectedFaceSprites.Length);
-				card.UpdateCards(selectedFaceSprites[id], backSprite, id);
-				card.OnCardSelected += CardSelected;
-				cards[cardCount] = card;
+				cardPool[cardCount].gameObject.SetActive(true);
+				cardPool[cardCount].UpdateCards(selectedFaceSprites[id], backSprite, id);
 				cardCount++;
 				if (cardCount % 2 == 0)
 				{
@@ -81,24 +103,25 @@ public class Board : MonoBehaviour
 		}
 	}
 
-	private void ShuffleArray<T>(T[] array)
+	private void ShuffleList<T>(List<T> list)
 	{
 		System.Random random = new System.Random();
 
-		for (int i = array.Length - 1; i > 0; i--)
+		for (int i = totalcards - 1; i > 0; i--)
 		{
 			int randomIndex = random.Next(0, i);
-			T temp = array[randomIndex];
-			array[randomIndex] = array[i];
-			array[i] = temp;
+			T temp = list[randomIndex];
+			list[randomIndex] = list[i];
+			list[i] = temp;
 		}
 	}
 
 	private void AddCardsOnBoard()
 	{
-		for (int i = 0; i < cards.Length; i++)
+		gridLayout.cellSize = new Vector2(parentRect.rect.width / cols, parentRect.rect.height / rows);
+		for (int i = 0; i < totalcards; i++)
 		{
-			cards[i].transform.SetParent(transform, false);
+			cardPool[i].transform.SetParent(transform, false);
 		}
 	}
 
