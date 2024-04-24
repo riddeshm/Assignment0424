@@ -3,15 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class Card : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private Sprite backSprite;
     [SerializeField] private Sprite frontSprite;
 
+    public int id = -1;
+
     private Image mainRenderer;
 
     private float rotateSpeed = 300f;
+
+    public void UpdateCards(Sprite _frontSprite, Sprite _backSprite, int _id)
+    {
+        frontSprite = _frontSprite;
+        backSprite = _backSprite;
+        id = _id;
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
