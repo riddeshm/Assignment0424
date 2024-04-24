@@ -14,9 +14,10 @@ public class Board : MonoBehaviour
 	private int cols;
 	private List<Card> cardPool = new List<Card>();
 	private int totalcards;
+	private int totalFaceSprites;
 
 	private Sprite backSprite;
-	private string[] selectedFaceSprites;
+	private List<Sprite> selectedFaceSprites = new List<Sprite>();
 	private RectTransform parentRect;
 	private GridLayoutGroup gridLayout;
 
@@ -37,27 +38,29 @@ public class Board : MonoBehaviour
 
     public void Init(int _rows, int _cols)
     {
-		
 		rows = _rows;
 		cols = _cols;
 		totalcards = rows * cols;
-		int totalFaceSprites = Mathf.CeilToInt((float)(rows * cols) / 2f);
-		int randomFrontSpriteIndex = Random.Range(0, faceSpritesAddress.Length - totalFaceSprites);
-
-
-		selectedFaceSprites = new string[totalFaceSprites];
-		for (int i = 0, j = randomFrontSpriteIndex; i < totalFaceSprites; i++)
-		{
-			selectedFaceSprites[i] = faceSpritesAddress[j];
-			j++;
-		}
+		
+		selectedFaceSprites.Clear();
 
 		FetchAssetsFromAddressables();
 	}
 
 	private void FetchAssetsFromAddressables()
     {
+		totalFaceSprites = Mathf.CeilToInt((float)(rows * cols) / 2f);
+		int randomFrontSpriteIndex = Random.Range(0, faceSpritesAddress.Length - totalFaceSprites);
+
 		Addressables.LoadAssetAsync<Sprite>(backSpriteAddress).Completed += OnBackSpriteComplete;
+		Debug.Log("randomFrontSpriteIndex " + randomFrontSpriteIndex);
+		Debug.Log("totalFaceSprites " + totalFaceSprites);
+		for (int i = 0, j = randomFrontSpriteIndex; i < totalFaceSprites; i++)
+		{
+			Debug.Log("LoadAssetAsync " + faceSpritesAddress[j]);
+			Addressables.LoadAssetAsync<Sprite>(faceSpritesAddress[j]).Completed += OnFaceSpriteComplete;
+			j++;
+		}
 	}
 
 	private void OnBackSpriteComplete(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<Sprite> obj)
@@ -66,6 +69,11 @@ public class Board : MonoBehaviour
 		UpdateCards();
 		ShuffleList<Card>(cardPool);
 		AddCardsOnBoard();
+	}
+
+	private void OnFaceSpriteComplete(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<Sprite> obj)
+	{
+		selectedFaceSprites.Add(obj.Result);
 	}
 
 	private void CreateCards(int count)
