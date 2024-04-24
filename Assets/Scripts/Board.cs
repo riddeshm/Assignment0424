@@ -25,11 +25,21 @@ public class Board : MonoBehaviour
 		
 	}
 
-	public void Init(int _rows, int _cols)
+	private void OnDestroy()
+	{
+		for (int i = 0; i < cards.Length; i++)
+		{
+			cards[i].OnCardSelected -= CardSelected;
+		}
+	}
+
+    public void Init(int _rows, int _cols)
     {
 		rows = _rows;
 		cols = _cols;
-		int totalFaceSprites = (rows * cols) / 2;
+		int totalFaceSprites = Mathf.CeilToInt((float)(rows * cols) / 2f);
+		Debug.Log("totalFaceSprites " + totalFaceSprites);
+		Debug.Log("faceSprites.Length - totalFaceSprites " + (faceSprites.Length - totalFaceSprites));
 		int randomFrontSpriteIndex = Random.Range(0, faceSprites.Length - totalFaceSprites);
 		selectedFaceSprites = new Sprite[totalFaceSprites];
 		cards = new Card[rows * cols];
@@ -58,6 +68,7 @@ public class Board : MonoBehaviour
 			{
 				GameObject cardGo = Instantiate(inputFieldPrefab);
 				Card card = cardGo.GetComponent<Card>();
+				Debug.Log(selectedFaceSprites.Length);
 				card.UpdateCards(selectedFaceSprites[id], backSprite, id);
 				card.OnCardSelected += CardSelected;
 				cards[cardCount] = card;
