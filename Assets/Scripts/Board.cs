@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
+	public event System.Action<Card> OnCardSelected;
 	[SerializeField] private Sprite backSprite;
 	[SerializeField] private Sprite[] faceSprites;
 	[SerializeField] private GameObject inputFieldPrefab;
@@ -58,6 +59,7 @@ public class Board : MonoBehaviour
 				GameObject cardGo = Instantiate(inputFieldPrefab);
 				Card card = cardGo.GetComponent<Card>();
 				card.UpdateCards(selectedFaceSprites[id], backSprite, id);
+				card.OnCardSelected += CardSelected;
 				cards[cardCount] = card;
 				cardCount++;
 				if (cardCount % 2 == 0)
@@ -87,5 +89,22 @@ public class Board : MonoBehaviour
 		{
 			cards[i].transform.SetParent(transform, false);
 		}
+	}
+
+	private void CardSelected(Card _card)
+    {
+		OnCardSelected?.Invoke(_card);
+    }
+
+	public void CorrectPair(Card _card1, Card _card2)
+    {
+		_card1.HideCard();
+		_card2.HideCard();
+	}
+
+	public void InCorrectPair(Card _card1, Card _card2)
+	{
+		_card1.ResetCard();
+		_card2.ResetCard();
 	}
 }
