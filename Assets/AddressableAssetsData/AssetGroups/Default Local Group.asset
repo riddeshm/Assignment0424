@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b02264acb35b914418e8cda51b87bc6c
+  m_SerializeEntries:
+  - m_GUID: 0802620b3a2859f45bdd189c7bc35d02
+    m_Address: Assets/Playing Cards/Image/PlayingCards/BackColor_Blue.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 21ca70266aebc054ba04bee60d93082f
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Joker_Color.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f068beb6338e31243afd5b1a3ed6604f
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Spade01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 02a559c0b6c879d4297056cef79f941b
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Spade05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 523bc81d4f12c154594d9134dfd85f4f
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Spade11.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8523d4368d550a947a1c3cb4168ed9ff
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Spade03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 07517454cd8e340429110b2e89533e3a
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Spade07.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 78998314942cf794786a837260fddeeb
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Spade09.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 397fcc769693d0747ac7c79d662555d9
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Spade10.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 99f10cb705af6b348a812c1ab511d0ce
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Spade02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6a15298c71266594086136f6121ae454
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Spade06.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: da6a082efa6b6694f92fad9442f30fa9
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Spade08.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0bc0a39dce7af2d40b541dddf4ed86dc
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Spade12.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7b52a4d2a4cc48d45bc0c270ebffc24b
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Spade04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2c1a6354d1d441c4e97d432a7edc557c
+    m_Address: Assets/Playing Cards/Image/PlayingCards/Spade13.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: fa404bd53094f6e4a9078d105d5e30fb, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 14830499bf4815343a2539af72e24f6d, type: 2}
+    - {fileID: 11400000, guid: a91837d1760c0184985de6e7a542bb53, type: 2}

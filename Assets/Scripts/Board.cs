@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
 
 public class Board : MonoBehaviour
 {
 	public event System.Action<Card> OnCardSelected;
-	[SerializeField] private Sprite backSprite;
-	[SerializeField] private Sprite[] faceSprites;
+	[SerializeField]private string backSpriteAddress;
+	[SerializeField] private string[] faceSpritesAddress;
 	[SerializeField] private GameObject inputFieldPrefab;
 	private int rows;
 	private int cols;
 	private List<Card> cardPool = new List<Card>();
 	private int totalcards;
-	
+	private int totalFaceSprites;
 
-	private Sprite[] selectedFaceSprites;
+	private Sprite backSprite;
+	private List<Sprite> selectedFaceSprites = new List<Sprite>();
 	private RectTransform parentRect;
 	private GridLayoutGroup gridLayout;
 
@@ -39,20 +41,39 @@ public class Board : MonoBehaviour
 		rows = _rows;
 		cols = _cols;
 		totalcards = rows * cols;
-		int totalFaceSprites = Mathf.CeilToInt((float)(rows * cols) / 2f);
-		int randomFrontSpriteIndex = Random.Range(0, faceSprites.Length - totalFaceSprites);
-		selectedFaceSprites = new Sprite[totalFaceSprites];
+		
+		selectedFaceSprites.Clear();
 
+		FetchAssetsFromAddressables();
+	}
 
+	private void FetchAssetsFromAddressables()
+    {
+		totalFaceSprites = Mathf.CeilToInt((float)(rows * cols) / 2f);
+		int randomFrontSpriteIndex = Random.Range(0, faceSpritesAddress.Length - totalFaceSprites);
+
+		Addressables.LoadAssetAsync<Sprite>(backSpriteAddress).Completed += OnBackSpriteComplete;
+		Debug.Log("randomFrontSpriteIndex " + randomFrontSpriteIndex);
+		Debug.Log("totalFaceSprites " + totalFaceSprites);
 		for (int i = 0, j = randomFrontSpriteIndex; i < totalFaceSprites; i++)
-        {
-			selectedFaceSprites[i] = faceSprites[j];
+		{
+			Debug.Log("LoadAssetAsync " + faceSpritesAddress[j]);
+			Addressables.LoadAssetAsync<Sprite>(faceSpritesAddress[j]).Completed += OnFaceSpriteComplete;
 			j++;
 		}
+	}
 
+	private void OnBackSpriteComplete(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<Sprite> obj)
+	{
+		backSprite = obj.Result;
 		UpdateCards();
 		ShuffleList<Card>(cardPool);
 		AddCardsOnBoard();
+	}
+
+	private void OnFaceSpriteComplete(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<Sprite> obj)
+	{
+		selectedFaceSprites.Add(obj.Result);
 	}
 
 	private void CreateCards(int count)
@@ -93,6 +114,7 @@ public class Board : MonoBehaviour
 			for (int j = 0; j < cols; j++)
 			{
 				cardPool[cardCount].gameObject.SetActive(true);
+				Debug.Log("UpdateCards backSprite " + backSprite);
 				cardPool[cardCount].UpdateCards(selectedFaceSprites[id], backSprite, id);
 				cardCount++;
 				if (cardCount % 2 == 0)

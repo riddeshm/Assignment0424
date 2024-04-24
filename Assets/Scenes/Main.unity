@@ -1421,22 +1421,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe692cf2e02d9e4a832fb8ff2dbe41e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backSprite: {fileID: 21300000, guid: 0802620b3a2859f45bdd189c7bc35d02, type: 3}
-  faceSprites:
-  - {fileID: 21300000, guid: 21ca70266aebc054ba04bee60d93082f, type: 3}
-  - {fileID: 21300000, guid: f068beb6338e31243afd5b1a3ed6604f, type: 3}
-  - {fileID: 21300000, guid: 99f10cb705af6b348a812c1ab511d0ce, type: 3}
-  - {fileID: 21300000, guid: 8523d4368d550a947a1c3cb4168ed9ff, type: 3}
-  - {fileID: 21300000, guid: 7b52a4d2a4cc48d45bc0c270ebffc24b, type: 3}
-  - {fileID: 21300000, guid: 02a559c0b6c879d4297056cef79f941b, type: 3}
-  - {fileID: 21300000, guid: 6a15298c71266594086136f6121ae454, type: 3}
-  - {fileID: 21300000, guid: 07517454cd8e340429110b2e89533e3a, type: 3}
-  - {fileID: 21300000, guid: da6a082efa6b6694f92fad9442f30fa9, type: 3}
-  - {fileID: 21300000, guid: 78998314942cf794786a837260fddeeb, type: 3}
-  - {fileID: 21300000, guid: 397fcc769693d0747ac7c79d662555d9, type: 3}
-  - {fileID: 21300000, guid: 523bc81d4f12c154594d9134dfd85f4f, type: 3}
-  - {fileID: 21300000, guid: 0bc0a39dce7af2d40b541dddf4ed86dc, type: 3}
-  - {fileID: 21300000, guid: 2c1a6354d1d441c4e97d432a7edc557c, type: 3}
+  backSpriteAddress: Assets/Playing Cards/Image/PlayingCards/BackColor_Blue.png
+  faceSpritesAddress:
+  - Assets/Playing Cards/Image/PlayingCards/Joker_Color.png
+  - Assets/Playing Cards/Image/PlayingCards/Spade01.png
+  - Assets/Playing Cards/Image/PlayingCards/Spade02.png
+  - Assets/Playing Cards/Image/PlayingCards/Spade03.png
+  - Assets/Playing Cards/Image/PlayingCards/Spade04.png
+  - Assets/Playing Cards/Image/PlayingCards/Spade05.png
+  - Assets/Playing Cards/Image/PlayingCards/Spade06.png
+  - Assets/Playing Cards/Image/PlayingCards/Spade07.png
+  - Assets/Playing Cards/Image/PlayingCards/Spade08.png
+  - Assets/Playing Cards/Image/PlayingCards/Spade09.png
+  - Assets/Playing Cards/Image/PlayingCards/Spade10.png
+  - Assets/Playing Cards/Image/PlayingCards/Spade11.png
+  - Assets/Playing Cards/Image/PlayingCards/Spade13.png
   inputFieldPrefab: {fileID: 7535261201236187606, guid: c49886f180828a04d850b5ae6824533e, type: 3}
 --- !u!114 &1004018234
 MonoBehaviour:

@@ -15,8 +15,8 @@ public enum CardState
 public class Card : MonoBehaviour, IPointerDownHandler
 {
     public event System.Action<Card> OnCardSelected;
-    [SerializeField] private Sprite backSprite;
-    [SerializeField] private Sprite frontSprite;
+    private Sprite backSprite;
+    private Sprite frontSprite;
 
     private int id = -1;
 
@@ -33,8 +33,6 @@ public class Card : MonoBehaviour, IPointerDownHandler
     {
         mainRenderer = GetComponent<Image>();
 
-        mainRenderer.sprite = backSprite;
-
         currentState = CardState.back;
     }
 
@@ -50,6 +48,10 @@ public class Card : MonoBehaviour, IPointerDownHandler
         id = _id;
         mainRenderer.enabled = true;
         currentState = _currentState;
+        Debug.Log("_backSprite " + _backSprite);
+        Debug.Log("backSprite " + backSprite);
+        mainRenderer.sprite = backSprite;
+        
     }
 
     public void OnPointerDown(PointerEventData eventData)
