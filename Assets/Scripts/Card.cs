@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.AddressableAssets;
 
 public enum CardState
 {
@@ -41,9 +42,9 @@ public class Card : MonoBehaviour, IPointerDownHandler
         return id;
     }
 
-    public void UpdateCards(Sprite _frontSprite, Sprite _backSprite, int _id, CardState _currentState = CardState.back)
+    public void UpdateCards(string _frontSpriteAddress, Sprite _backSprite, int _id, CardState _currentState = CardState.back)
     {
-        frontSprite = _frontSprite;
+        Addressables.LoadAssetAsync<Sprite>(_frontSpriteAddress).Completed += OnFrontSpriteComplete;
         backSprite = _backSprite;
         id = _id;
         mainRenderer.enabled = true;
@@ -52,6 +53,11 @@ public class Card : MonoBehaviour, IPointerDownHandler
         Debug.Log("backSprite " + backSprite);
         mainRenderer.sprite = backSprite;
         
+    }
+
+    private void OnFrontSpriteComplete(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<Sprite> obj)
+    {
+        frontSprite = obj.Result;
     }
 
     public void OnPointerDown(PointerEventData eventData)
