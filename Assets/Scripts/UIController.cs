@@ -85,7 +85,15 @@ public class UIController : MonoBehaviour
     private void GameComplete()
     {
         saveButton.interactable = false;
+
+        ShowGameCompleteWithDelay();
+    }
+
+    private async void ShowGameCompleteWithDelay()
+    {
+        await System.Threading.Tasks.Task.Delay(1000);
         winPopup.SetActive(true);
+        AudioController.Instance.PlayComplete();
     }
 
     private void UpdateScore(int score, int streak)

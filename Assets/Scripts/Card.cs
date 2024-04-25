@@ -95,6 +95,7 @@ public class Card : MonoBehaviour, IPointerDownHandler
     {
         if (!isSelectable)
             return;
+        AudioController.Instance.PlayFlip();
         StartCoroutine(RotateToShowCard());
     }
 

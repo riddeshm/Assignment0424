@@ -188,12 +188,14 @@ public class Board : MonoBehaviour
 
 	public void CorrectPair(Card _card1, Card _card2)
     {
+		AudioController.Instance.PlayCorrect();
 		_card1.HideCard();
 		_card2.HideCard();
 	}
 
 	public void InCorrectPair(Card _card1, Card _card2)
 	{
+		AudioController.Instance.PlayIncorrect();
 		_card1.ResetCard();
 		_card2.ResetCard();
 	}
