@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.AddressableAssets;
 
 public enum CardState
 {
@@ -17,6 +18,7 @@ public class Card : MonoBehaviour, IPointerDownHandler
     public event System.Action<Card> OnCardSelected;
     private Sprite backSprite;
     private Sprite frontSprite;
+    private string frontSpriteAddress;
 
     private int id = -1;
 
@@ -28,7 +30,11 @@ public class Card : MonoBehaviour, IPointerDownHandler
 
     private CardState currentState;
 
-    
+    public string FrontSpriteAddress { get { return frontSpriteAddress; } }
+
+    public CardState CurrentState { get { return currentState; } }
+
+
     private void Awake()
     {
         mainRenderer = GetComponent<Image>();
@@ -41,17 +47,48 @@ public class Card : MonoBehaviour, IPointerDownHandler
         return id;
     }
 
-    public void UpdateCards(Sprite _frontSprite, Sprite _backSprite, int _id, CardState _currentState = CardState.back)
+    public void UpdateData(string _frontSpriteAddress, int _id, CardState _currentState = CardState.back)
     {
-        frontSprite = _frontSprite;
-        backSprite = _backSprite;
-        id = _id;
-        mainRenderer.enabled = true;
-        currentState = _currentState;
-        Debug.Log("_backSprite " + _backSprite);
-        Debug.Log("backSprite " + backSprite);
-        mainRenderer.sprite = backSprite;
+        if(frontSprite != null)
+        {
+            Addressables.Release<Sprite>(frontSprite);
+        }
+        frontSpriteAddress = _frontSpriteAddress;
+        Addressables.LoadAssetAsync<Sprite>(frontSpriteAddress).Completed += OnFrontSpriteComplete;
         
+        id = _id;
+        currentState = _currentState;
+    }
+
+    public void UpdateView(Sprite _backSprite)
+    {
+        backSprite = _backSprite;
+        mainRenderer.enabled = true;
+        
+        mainRenderer.sprite = backSprite;
+        Debug.Log("mainRenderer.sprite " + mainRenderer.sprite);
+        switch (currentState)
+        {
+            case CardState.back:
+                transform.rotation = Quaternion.identity;
+                mainRenderer.sprite = backSprite;
+                isSelectable = true;
+                break;
+            case CardState.front:
+                transform.rotation = Quaternion.Euler(0f, 180, 0f);
+                mainRenderer.sprite = frontSprite;
+                isSelectable = false;
+                OnCardSelected?.Invoke(this);
+                break;
+            case CardState.complete:
+                HideCard();
+                break;
+        }
+    }
+
+    private void OnFrontSpriteComplete(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<Sprite> obj)
+    {
+        frontSprite = obj.Result;
     }
 
     public void OnPointerDown(PointerEventData eventData)

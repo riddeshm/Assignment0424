@@ -6,6 +6,7 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] GameController gameController;
     [SerializeField] private Canvas menuCanvas;
+    [SerializeField] SaveManager saveManager;
 
     public void InitBoard2x2()
     {
@@ -26,6 +27,24 @@ public class UIController : MonoBehaviour
     {
         gameController.InitBoard(5, 4);
         DisableMenu();
+    }
+
+    public void SaveGame()
+    {
+        saveManager.SaveGame(gameController.Cards, gameController.Rows, gameController.Cols);
+    }
+
+    public void LoadGame()
+    {
+        if(saveManager.LoadGame())
+        {
+            gameController.LoadGame(saveManager.Rows, saveManager.Cols, saveManager.CardInfos);
+            DisableMenu();
+        }
+        else
+        {
+            Debug.LogError("Game was not saved, hence could not load");
+        }
     }
 
     public void EnableMenu()

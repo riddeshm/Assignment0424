@@ -77,6 +77,10 @@ MonoBehaviour:
     m_Address: Assets/Playing Cards/Image/PlayingCards/Spade13.png
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: f821d4ef09c9ece4e90664dbbcdf202a
+    m_Address: Assets/Playing Cards/Image/PlayingCards/CardSpriteAtlas.spriteatlas
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: fa404bd53094f6e4a9078d105d5e30fb, type: 2}
   m_SchemaSet:

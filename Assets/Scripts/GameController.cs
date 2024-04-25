@@ -8,6 +8,10 @@ public class GameController : MonoBehaviour
 
     private Queue<Card> selectedCards = new Queue<Card>();
 
+    public int Rows { get { return board.Rows; } }
+    public int Cols { get { return board.Cols; } }
+    public Card[] Cards { get { return board.Cards; } }
+
     private void Start()
     {
         board.OnCardSelected += CardSelected;
@@ -20,7 +24,14 @@ public class GameController : MonoBehaviour
 
     public void InitBoard(int _row, int _col)
     {
+        selectedCards.Clear();
         board.Init(_row, _col);
+    }
+
+    public void LoadGame(int _row, int _col, CardInfo[] cardInfos)
+    {
+        selectedCards.Clear();
+        board.Init(_row, _col, cardInfos);
     }
 
     private void CardSelected(Card _card)

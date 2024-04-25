@@ -17,9 +17,13 @@ public class Board : MonoBehaviour
 	private int totalFaceSprites;
 
 	private Sprite backSprite;
-	private List<Sprite> selectedFaceSprites = new List<Sprite>();
+	private string[] selectedFaceSpriteAddresses;
 	private RectTransform parentRect;
 	private GridLayoutGroup gridLayout;
+
+	public int Rows { get { return rows; } }
+	public int Cols { get { return cols; } }
+	public Card[] Cards { get { return cardPool.GetRange(0, totalcards).ToArray(); } }
 
 	private void Awake()
 	{
@@ -41,39 +45,50 @@ public class Board : MonoBehaviour
 		rows = _rows;
 		cols = _cols;
 		totalcards = rows * cols;
-		
-		selectedFaceSprites.Clear();
 
 		FetchAssetsFromAddressables();
+	}
+
+	public void Init(int _rows, int _cols, CardInfo[] cardInfos)
+	{
+		rows = _rows;
+		cols = _cols;
+		totalcards = cardInfos.Length;
+
+		FetchAssetsFromAddressables(cardInfos);
 	}
 
 	private void FetchAssetsFromAddressables()
     {
 		totalFaceSprites = Mathf.CeilToInt((float)(rows * cols) / 2f);
 		int randomFrontSpriteIndex = Random.Range(0, faceSpritesAddress.Length - totalFaceSprites);
-
+		selectedFaceSpriteAddresses = new string[totalFaceSprites];
 		Addressables.LoadAssetAsync<Sprite>(backSpriteAddress).Completed += OnBackSpriteComplete;
-		Debug.Log("randomFrontSpriteIndex " + randomFrontSpriteIndex);
-		Debug.Log("totalFaceSprites " + totalFaceSprites);
 		for (int i = 0, j = randomFrontSpriteIndex; i < totalFaceSprites; i++)
 		{
-			Debug.Log("LoadAssetAsync " + faceSpritesAddress[j]);
-			Addressables.LoadAssetAsync<Sprite>(faceSpritesAddress[j]).Completed += OnFaceSpriteComplete;
+			selectedFaceSpriteAddresses[i] = faceSpritesAddress[j];
 			j++;
 		}
+		UpdateCards();
+	}
+
+	private void FetchAssetsFromAddressables(CardInfo[] cardInfos)
+	{
+		totalFaceSprites = cardInfos.Length;
+		selectedFaceSpriteAddresses = new string[totalFaceSprites];
+		Addressables.LoadAssetAsync<Sprite>(backSpriteAddress).Completed += OnBackSpriteComplete;
+		for (int i = 0; i < totalFaceSprites; i++)
+		{
+			selectedFaceSpriteAddresses[i] = cardInfos[i].frontSprite;
+		}
+		UpdateCards(cardInfos);
 	}
 
 	private void OnBackSpriteComplete(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<Sprite> obj)
 	{
 		backSprite = obj.Result;
-		UpdateCards();
 		ShuffleList<Card>(cardPool);
 		AddCardsOnBoard();
-	}
-
-	private void OnFaceSpriteComplete(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<Sprite> obj)
-	{
-		selectedFaceSprites.Add(obj.Result);
 	}
 
 	private void CreateCards(int count)
@@ -89,7 +104,6 @@ public class Board : MonoBehaviour
 
 	private void HideCards(int fromIndex)
     {
-		Debug.Log("fromIndex " + fromIndex);
 		for (int i = fromIndex; i < cardPool.Count; i++)
 		{
 			cardPool[i].gameObject.SetActive(false);
@@ -114,14 +128,31 @@ public class Board : MonoBehaviour
 			for (int j = 0; j < cols; j++)
 			{
 				cardPool[cardCount].gameObject.SetActive(true);
-				Debug.Log("UpdateCards backSprite " + backSprite);
-				cardPool[cardCount].UpdateCards(selectedFaceSprites[id], backSprite, id);
+				cardPool[cardCount].UpdateData(selectedFaceSpriteAddresses[id], id);
 				cardCount++;
 				if (cardCount % 2 == 0)
 				{
 					id++;
 				}
 			}
+		}
+	}
+
+	private void UpdateCards(CardInfo[] cardInfos)
+	{
+		if (cardPool.Count < totalcards)
+		{
+			CreateCards(totalcards - cardPool.Count);
+		}
+		else if (cardPool.Count > totalcards)
+		{
+			int extraCards = cardPool.Count - totalcards;
+			HideCards(cardPool.Count - extraCards);
+		}
+		for (int i = 0; i < cardInfos.Length; i++)
+		{
+			cardPool[i].gameObject.SetActive(true);
+			cardPool[i].UpdateData(cardInfos[i].frontSprite, cardInfos[i].id, (CardState)cardInfos[i].state);
 		}
 	}
 
@@ -140,9 +171,12 @@ public class Board : MonoBehaviour
 
 	private void AddCardsOnBoard()
 	{
+
 		gridLayout.cellSize = new Vector2(parentRect.rect.width / cols, parentRect.rect.height / rows);
 		for (int i = 0; i < totalcards; i++)
 		{
+			Debug.Log("backSprite " + backSprite);
+			cardPool[i].UpdateView(backSprite);
 			cardPool[i].transform.SetParent(transform, false);
 		}
 	}
@@ -150,7 +184,7 @@ public class Board : MonoBehaviour
 	private void CardSelected(Card _card)
     {
 		OnCardSelected?.Invoke(_card);
-    }
+	}
 
 	public void CorrectPair(Card _card1, Card _card2)
     {
@@ -162,5 +196,11 @@ public class Board : MonoBehaviour
 	{
 		_card1.ResetCard();
 		_card2.ResetCard();
+	}
+
+	public Card[] GetCurrentCards()
+    {
+		List<Card> currentCards = new List<Card>(cardPool.GetRange(0, totalcards));
+		return currentCards.ToArray();
 	}
 }
