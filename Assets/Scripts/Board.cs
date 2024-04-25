@@ -175,7 +175,6 @@ public class Board : MonoBehaviour
 		gridLayout.cellSize = new Vector2(parentRect.rect.width / cols, parentRect.rect.height / rows);
 		for (int i = 0; i < totalcards; i++)
 		{
-			Debug.Log("backSprite " + backSprite);
 			cardPool[i].UpdateView(backSprite);
 			cardPool[i].transform.SetParent(transform, false);
 		}

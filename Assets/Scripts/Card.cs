@@ -66,7 +66,6 @@ public class Card : MonoBehaviour, IPointerDownHandler
         mainRenderer.enabled = true;
         
         mainRenderer.sprite = backSprite;
-        Debug.Log("mainRenderer.sprite " + mainRenderer.sprite);
         switch (currentState)
         {
             case CardState.back:
