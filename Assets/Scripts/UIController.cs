@@ -7,6 +7,18 @@ public class UIController : MonoBehaviour
     [SerializeField] GameController gameController;
     [SerializeField] private Canvas menuCanvas;
     [SerializeField] SaveManager saveManager;
+    [SerializeField] GameObject saveButton;
+    [SerializeField] GameObject winPopup;
+
+    private void Awake()
+    {
+        gameController.OnGameComplete += GameComplete;
+    }
+
+    private void OnDestroy()
+    {
+        gameController.OnGameComplete -= GameComplete;
+    }
 
     public void InitBoard2x2()
     {
@@ -57,5 +69,13 @@ public class UIController : MonoBehaviour
     {
         menuCanvas.enabled = false;
         menuCanvas.gameObject.SetActive(false);
+        saveButton.SetActive(true);
+        winPopup.SetActive(false);
+    }
+
+    private void GameComplete()
+    {
+        saveButton.SetActive(false);
+        winPopup.SetActive(true);
     }
 }
